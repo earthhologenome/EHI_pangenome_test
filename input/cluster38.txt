@@ -1,0 +1,6 @@
+genomes/EHA00679_bin.17.fa.gz
+genomes/EHA00645_bin.14.fa.gz
+genomes/EHA00717_bin.5.fa.gz
+genomes/EHA00724_bin.10.fa.gz
+genomes/EHA03586_bin.4.fa.gz
+genomes/EHA03447_bin.18.fa.gz
