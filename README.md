@@ -1,5 +1,5 @@
 # EHI pangenome test
-Pangenome generation test. Using genomes from DMB0162 (Mediterranean lizards), clusters 35, 38 and 43
+This is a comparison between traditional MAG dereplication and pangenome generation relying on dRep clusters. The number of genomes and final annotations are compared using multiple clusters from dereplication and mapping batch DMB0162 belonging to Mediterranean lizards.
 
 ## Dependencies
 
