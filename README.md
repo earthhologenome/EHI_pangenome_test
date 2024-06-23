@@ -6,6 +6,7 @@ This is a comparison between traditional MAG dereplication and pangenome generat
 - **Original:** default bifrost and ggcaller options.
 - **v2:** ggcaller changes: ```--max-path-length 50000 --max-ORF-overlap 100 --min-path-score 80 --min-orf-score 80```
 - **v3:** bifrost change: ```-k 19```
+- **v4:** default pggb options.
 
 ## Dependencies
 
