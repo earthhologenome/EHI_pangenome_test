@@ -108,5 +108,20 @@ rule pangenome_depth:
 		module load odgi/0.8.6
 		odgi depth -i {input} > {output.contig}
 		odgi depth -i {input} -d > {output.node}
+		"""
 
+rule pangenome_fasta:
+	input:
+		"pangenomes/{pangenome}_v4/{pangenome}.og"
+	output:
+		"pangenomes/{pangenome}_v4/{pangenome}.fasta"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:10:00'
+	shell:
+		"""
+		module load odgi/0.8.6
+		odgi paths -i {input} -f > {output}
 		"""
