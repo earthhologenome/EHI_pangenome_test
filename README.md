@@ -61,12 +61,12 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 ### cluster38
 | MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
 | --- | --- | --- | --- | --- | --- | --- |
-| EHA00679_bin.17.fa.gz |   |  |  |  |  |  |
-| EHA00645_bin.14.fa.gz |   |  |  |  |  |  |
-| EHA00717_bin.5.fa.gz  |   |  |  |  |  |  |
-| EHA00724_bin.10.fa.gz |   |  |  |  |  |  |
-| EHA03586_bin.4.fa.gz  |   |  |  |  |  |  |
-| EHA03447_bin.18.fa.gz | * |  |  |  |  |  |
+| EHA00679_bin.17.fa.gz |   | 99.10 | 1.43 | 3.02 | 1479 | 1152 |
+| EHA00645_bin.14.fa.gz |   | 98.66 | 0.00 | 1.84 | 1486 | 1148 |
+| EHA00717_bin.5.fa.gz  |   | 99.10 | 1.34 | 2.99 | 1488 | 1149 |
+| EHA00724_bin.10.fa.gz |   | 77.08 | 1.00 | 0.69 | 1515 | 1150 |
+| EHA03586_bin.4.fa.gz  |   | 95.65 | 0.20 | 1.7 | 1535 | 1155 |
+| EHA03447_bin.18.fa.gz | * | 100.00 | 0.08 | 2.45 | 1311 | 966 |
 
 #### Pangenome
 
