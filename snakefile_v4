@@ -135,7 +135,7 @@ rule dram:
 	threads:
 		8
 	params:
-		outdir="pangenomes_v4/{pangenome}/dram"
+		outdir="pangenomes/{pangenome}_v4/dram"
 	resources:
 		mem_gb=32,
 		time='10:00:00'
