@@ -97,7 +97,7 @@ rule dram:
 		set +eu
 		source activate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
 		rm -rf {params.outdir}
-		DRAM.py annotate_genes -i {input} -o {params.outdir} --threads {threads} --use_uniref
+		DRAM.py annotate_genes -i {input} -o {params.outdir} --threads {threads}
 		source deactivate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
 		set -eu
 		"""
