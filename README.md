@@ -102,7 +102,7 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
 - **Number of genes:** 1853
   - **Core**: 
   - **Auxiliary**: 
-- **Number of annotated genes:** 
+- **Number of annotated genes:** 1210
 
 ### cluster38
 | MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
@@ -122,6 +122,7 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
 - **Number of genes:** 1661
   - **Core**: 1359
   - **Auxiliary**: 302 
+- **Number of annotated genes:** 1175 (KEGG: 781)
 
 #### Pangenome v3 (reduced kmer-size: k19)
 
@@ -141,7 +142,7 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
 - **Number of genes:** 2491
   - **Core**: 
   - **Auxiliary**: 
-- **Number of annotated genes:** 
+- **Number of annotated genes:** 1458 (KEGG: 596)
 
 ### cluster43
 - EHA03755_bin.377.fa.gz
