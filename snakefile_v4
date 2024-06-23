@@ -125,3 +125,25 @@ rule pangenome_fasta:
 		module load odgi/0.8.6
 		odgi paths -i {input} -f > {output}
 		"""
+
+rule dram:
+	input:
+		"pangenomes/{pangenome}_v4/{pangenome}.fasta"
+	output:
+		"pangenomes/{pangenome}_v4/dram/annotations.tsv"
+	threads:
+		8
+	params:
+		outdir="pangenomes_v4/{pangenome}/dram"
+	resources:
+		mem_gb=32,
+		time='10:00:00'
+	shell:
+		"""
+		set +eu
+		source activate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
+		rm -rf {params.outdir}
+		DRAM.py annotate -i {input} -o {params.outdir} --threads {threads}
+		source deactivate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
+		set -eu
+		"""
