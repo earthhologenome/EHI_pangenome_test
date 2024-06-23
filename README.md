@@ -94,6 +94,16 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
   - **Auxiliary**: 18
 - **Number of annotated genes:** 826
 
+#### Pangenome v4 (pggb)
+
+- **Estimated length:** 1.67 Mb
+- **Cumulative gene length**: 1.46 Mb
+- **Estimated coding density**: 87.4%
+- **Number of genes:** 1853
+  - **Core**: 
+  - **Auxiliary**: 
+- **Number of annotated genes:** 
+
 ### cluster38
 | MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -123,6 +133,15 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
   - **Auxiliary**: 324  
 - **Number of annotated genes:** 1187
 
+#### Pangenome v4 (pggb)
+
+- **Estimated length:** 1.76 Mb
+- **Cumulative gene length**: 1.36 Mb
+- **Estimated coding density**: 77%
+- **Number of genes:** 2491
+  - **Core**: 
+  - **Auxiliary**: 
+- **Number of annotated genes:** 
 
 ### cluster43
 - EHA03755_bin.377.fa.gz
