@@ -5,7 +5,7 @@ This is a comparison between traditional MAG dereplication and pangenome generat
 
 - **Original:** default bifrost and ggcaller options.
 - **v2:** ggcaller changes: ```--max-path-length 50000 --max-ORF-overlap 100 --min-path-score 80 --min-orf-score 80```
-- **v2:** bifrost change: ```-k 19```
+- **v3:** bifrost change: ```-k 19```
 
 ## Dependencies
 
@@ -78,7 +78,18 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
 - **Estimated coding density**: 36%
 - **Number of genes:** 737
   - **Core**: 725
-  - **Auxiliary**: 11 
+  - **Auxiliary**: 11
+- **Number of annotated genes:** 493
+  
+#### Pangenome v3 (reduced kmer-size: k19)
+
+- **Estimated length:** 1.67 Mb
+- **Cumulative gene length**:  Mb
+- **Estimated coding density**: 60%
+- **Number of genes:** 1271
+  - **Core**: 1252
+  - **Auxiliary**: 18
+- **Number of annotated genes:** 826
 
 ### cluster38
 | MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
