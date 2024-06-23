@@ -110,6 +110,17 @@ cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
   - **Core**: 1359
   - **Auxiliary**: 302 
 
+#### Pangenome v3 (reduced kmer-size: k19)
+
+- **Estimated length:** 1.80 Mb
+- **Cumulative gene length**: 1.41 Mb
+- **Estimated coding density**: 78%
+- **Number of genes:** 1704
+  - **Core**: 1381
+  - **Auxiliary**: 324  
+- **Number of annotated genes:** 1187
+
+
 ### cluster43
 - EHA03755_bin.377.fa.gz
 - EHA03694_bin.654.fa.gz
