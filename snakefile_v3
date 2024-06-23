@@ -17,16 +17,16 @@ pangenomes, = glob_wildcards("input/{pangenome}.txt")
 #Target files
 rule all:
 	input:
-		expand("pangenomes/{pangenome}/{pangenome}.gfa", pangenome=pangenomes),
-		expand("pangenomes/{pangenome}/{pangenome}.faa", pangenome=pangenomes),
-		expand("pangenomes/{pangenome}/dram/annotations.tsv", pangenome=pangenomes)
+		expand("pangenomes/{pangenome}_v3/{pangenome}.gfa", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}_v3/{pangenome}.faa", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}_v3/dram/annotations.tsv", pangenome=pangenomes)
 
 rule bifrost:
 	input:
 		"input/{pangenome}.txt"
 	output:
-		gfa="pangenomes/{pangenome}/{pangenome}.gfa",
-		bfg="pangenomes/{pangenome}/{pangenome}.gfa.color.bfg"
+		gfa="pangenomes/{pangenome}_v3/{pangenome}.gfa",
+		bfg="pangenomes/{pangenome}_v3/{pangenome}.gfa.color.bfg"
 	threads:
 		1
 	resources:
@@ -40,15 +40,15 @@ rule bifrost:
 
 rule ggcaller:
 	input:
-		gfa="pangenomes/{pangenome}/{pangenome}.gfa",
-		bfg="pangenomes/{pangenome}/{pangenome}.gfa.color.bfg"
+		gfa="pangenomes/{pangenome}_v3/{pangenome}.gfa",
+		bfg="pangenomes/{pangenome}_v3/{pangenome}.gfa.color.bfg"
 	output:
-		seq="pangenomes/{pangenome}/ggcaller/pangenome_reference.fa",
-		tsv="pangenomes/{pangenome}/ggcaller/gene_presence_absence.Rtab"
+		seq="pangenomes/{pangenome}_v3/ggcaller/pangenome_reference.fa",
+		tsv="pangenomes/{pangenome}_v3/ggcaller/gene_presence_absence.Rtab"
 	threads:
 		8
 	params:
-		outdir="pangenomes/{pangenome}/ggcaller"
+		outdir="pangenomes/{pangenome}_v3/ggcaller"
 	resources:
 		mem_gb=32,
 		time='01:00:00'
@@ -63,11 +63,11 @@ rule ggcaller:
 
 rule translation:
 	input:
-		seq="pangenomes/{pangenome}/ggcaller/pangenome_reference.fa",
-		tsv="pangenomes/{pangenome}/ggcaller/gene_presence_absence.Rtab"
+		seq="pangenomes/{pangenome}_v3/ggcaller/pangenome_reference.fa",
+		tsv="pangenomes/{pangenome}_v3/ggcaller/gene_presence_absence.Rtab"
 	output:
-		seq="pangenomes/{pangenome}/{pangenome}.faa",
-		tsv="pangenomes/{pangenome}/{pangenome}.tsv"
+		seq="pangenomes/{pangenome}_v3/{pangenome}.faa",
+		tsv="pangenomes/{pangenome}_v3/{pangenome}.tsv"
 	threads:
 		1
 	resources:
@@ -82,13 +82,13 @@ rule translation:
 
 rule dram:
 	input:
-		"pangenomes/{pangenome}/{pangenome}.faa"
+		"pangenomes/{pangenome}_v3/{pangenome}.faa"
 	output:
-		"pangenomes/{pangenome}/dram/annotations.tsv"
+		"pangenomes/{pangenome}_v3/dram/annotations.tsv"
 	threads:
 		8
 	params:
-		outdir="pangenomes/{pangenome}/dram"
+		outdir="pangenomes/{pangenome}_v3/dram"
 	resources:
 		mem_gb=32,
 		time='10:00:00'
