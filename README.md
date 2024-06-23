@@ -49,7 +49,7 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 | EHA02915_bin.85.fa.gz | * | 95.48 | 0.60 | 1.33 | 1515 | 983 |
 | EHA00564_bin.1.fa.gz  |   | 82.69 | 1.14 | 1.48 | 1440 | 935 |
 
-#### Pangenome
+#### Pangenome (default ggcaller options)
 
 - **Estimated length:** 1.67 Mb
 - **Cumulative gene length**: 0.60 Mb
@@ -68,7 +68,7 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 | EHA03586_bin.4.fa.gz  |   | 95.65 | 0.20 | 1.7 | 1535 | 1155 |
 | EHA03447_bin.18.fa.gz | * | 100.00 | 0.08 | 2.45 | 1311 | 966 |
 
-#### Pangenome
+#### Pangenome (default ggcaller options)
 
 - **Estimated length:** 1.84 Mb
 - **Cumulative gene length**: 1.40 Mb
