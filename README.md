@@ -38,6 +38,22 @@ Launch the snakemake pipeline.
 snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --mem {resources.mem_gb}G --time {resources.time} -c {threads} --job-name={rule}.{wildcards.pangenome} -v' --use-conda --conda-frontend mamba --conda-prefix conda --latency-wait 600 --keep-going --keep-incomplete
 ```
 
+## Stats extraction
+
+Length is estimated by Bandage from the pangenome graph.
+
+Gene sequence length calculation
+
+```{sh}
+cat pangenomes/{pangenome}/{pangenome}.faa | grep -v ">" | tr -d '\n' | wc -c | awk '{print $1 * 3}'
+```
+
+Core and auxiliary genomes
+
+```{sh}
+cat pangenomes/{pangenome}/ggcaller/summary_statistics.txt
+```
+
 ## Clusters
 
 ### cluster35
