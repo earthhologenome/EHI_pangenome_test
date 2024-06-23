@@ -53,6 +53,7 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 
 - **Estimated length:** 1.67 Mb
 - **Cumulative gene length**: 0.60 Mb
+- **Estimated coding density**: 36%
 - **Number of genes:** 737
   - **Core**: 725
   - **Auxiliary**: 11 
@@ -70,6 +71,8 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 #### Pangenome
 
 - **Estimated length:** 1.84 Mb
+- **Cumulative gene length**: 1.40 Mb
+- **Estimated coding density**: 76%
 - **Number of genes:** 1661
   - **Core**: 1359
   - **Auxiliary**: 302 
