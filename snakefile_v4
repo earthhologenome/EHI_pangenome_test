@@ -1,0 +1,112 @@
+
+######
+# Experimental pangenome pipeline
+# Antton alberdi
+# 2024/06/17
+# Description: the pipeline creates, annotates and analyses pangenomes.
+#
+# 1) Create pangenome input files and store them in the input folder
+# 2) Launch the snakemake using the following code:
+# module purge && module load snakemake/7.20.0 mamba/1.3.1
+# snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --mem {resources.mem_gb}G --time {resources.time} -c {threads} --job-name={rule}.{wildcards.pangenome} -v'   --use-conda --conda-frontend mamba --conda-prefix conda --latency-wait 600
+#
+######
+
+#List sample wildcards
+pangenomes, = glob_wildcards("input/{pangenome}.txt")
+
+# Function to count the number of rows in a file
+def count_rows(file_path):
+    with open(file_path, 'r') as f:
+        return sum(1 for line in f)
+
+#Target files
+rule all:
+	input:
+		expand("pangenomes/{pangenome}/{pangenome}.gfa", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}/{pangenome}_contig_depth.tsv", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}/{pangenome}_node_depth.tsv", pangenome=pangenomes)
+
+rule cat_genomes:
+	input:
+		"input/{pangenome}.txt"
+	output:
+		"pangenomes/{pangenome}_v4/{pangenome}.fa"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:05:00'
+	shell:
+		"""
+		xargs cat < {input} > {output}
+		"""
+
+rule index_genomes:
+	input:
+		"pangenomes/{pangenome}_v4/{pangenome}.fa"
+	output:
+		"pangenomes/{pangenome}_v4/{pangenome}.fa.fai"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:05:00'
+	shell:
+		"""
+		module load samtools/1.18
+		samtools faidx -o {output} {input}
+		"""
+
+rule build_pangenome:
+	input:
+		genomes="pangenomes/{pangenome}_v4/{pangenome}.fa",
+		index="pangenomes/{pangenome}_v4/{pangenome}.fa.fai"
+	output:
+		gfa="pangenomes/{pangenome}_v4/{pangenome}.gfa",
+		og="pangenomes/{pangenome}_v4/{pangenome}.og",
+		lay="pangenomes/{pangenome}_v4/{pangenome}.og.lay",
+		paf="pangenomes/{pangenome}_v4/{pangenome}.paf"
+	threads:
+		16
+	params:
+		ngenomes=lambda wildcards: count_rows(f"input/{wildcards.pangenome}.txt"),
+		outpath="pangenomes/{pangenome}_v4/pggb",
+		gfafile="pangenomes/{pangenome}_v4/pggb/*final.gfa",
+		ogfile="pangenomes/{pangenome}_v4/pggb/*final.og",
+		layfile="pangenomes/{pangenome}_v4/pggb/*final.og.lay",
+		paffile="pangenomes/{pangenome}_v4/pggb/*alignments.wfmash.paf"
+	resources:
+		mem_gb=64,
+		time='03:00:00'
+	shell:
+		"""
+		module load pggb/0.5.4
+		mkdir {params.outpath}
+		pggb -i {input.genomes} -o {params.outpath} -n {params.ngenomes} -t {threads} -p 95 -s 1000 -P asm20 -m
+		
+		# Rename and move output
+		mv {params.gfafile} {output.gfa}
+		mv {params.ogfile} {output.og}
+		mv {params.layfile} {output.lay}
+		mv {params.paffile} {output.paf}
+		"""
+
+rule pangenome_depth:
+	input:
+		"pangenomes/{pangenome}_v4/{pangenome}.og"
+	output:
+		contig="pangenomes/{pangenome}_v4/{pangenome}_contig_depth.tsv",
+		node="pangenomes/{pangenome}_v4/{pangenome}_node_depth.tsv"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:10:00'
+	shell:
+		"""
+		module load odgi/0.8.6
+		odgi depth -i {input} > {output.contig}
+		odgi depth -i {input} -d > {output.node}
+
+		"""
