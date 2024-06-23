@@ -56,7 +56,7 @@ rule ggcaller:
 		"""
 		set +eu
 		source activate /home/jpl786/.conda/envs/ggc_env
-		ggcaller --graph {input.gfa} --colours {input.bfg} --out {params.outdir} --threads {threads}
+		ggcaller --graph {input.gfa} --colours {input.bfg} --out {params.outdir} --threads {threads} --balrog-db . --annotation none --no-write-graph
 		source deactivate /home/jpl786/.conda/envs/ggc_env
 		set -eu
 		"""
