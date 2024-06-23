@@ -16,6 +16,8 @@ This is a comparison between traditional MAG dereplication and pangenome generat
 - bifrost
 - ggcaller
 - bbmap
+- pggb
+- odgi
 - dram
 
 ## Pipeline
