@@ -47,20 +47,32 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 | MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
 | --- | --- | --- | --- | --- | --- | --- |
 | EHA02915_bin.85.fa.gz | * | 95.48 | 0.60 | 1.33 | 1515 | 983 |
-| EHA00564_bin.1.fa.gz |    | 82.69 | 1.14 | 1.48 | 1440 | 935 |
+| EHA00564_bin.1.fa.gz  |   | 82.69 | 1.14 | 1.48 | 1440 | 935 |
 
 #### Pangenome
 
 - **Estimated length:** 1.67 Mb
+- **Cumulative gene length**: 0.60 Mb
 - **Number of genes:** 737
+  - **Core**: 725
+  - **Auxiliary**: 11 
 
 ### cluster38
-- EHA00679_bin.17.fa.gz
-- EHA00645_bin.14.fa.gz
-- EHA00717_bin.5.fa.gz
-- EHA00724_bin.10.fa.gz
-- EHA03586_bin.4.fa.gz
-- EHA03447_bin.18.fa.gz *selected
+| MAG | Selection | Completeness | Contamination | Length | Genes | Annotated |
+| --- | --- | --- | --- | --- | --- | --- |
+| EHA00679_bin.17.fa.gz |   |  |  |  |  |  |
+| EHA00645_bin.14.fa.gz |   |  |  |  |  |  |
+| EHA00717_bin.5.fa.gz  |   |  |  |  |  |  |
+| EHA00724_bin.10.fa.gz |   |  |  |  |  |  |
+| EHA03586_bin.4.fa.gz  |   |  |  |  |  |  |
+| EHA03447_bin.18.fa.gz | * |  |  |  |  |  |
+
+#### Pangenome
+
+- **Estimated length:** 1.84 Mb
+- **Number of genes:** 1661
+  - **Core**: 1359
+  - **Auxiliary**: 302 
 
 ### cluster43
 - EHA03755_bin.377.fa.gz
