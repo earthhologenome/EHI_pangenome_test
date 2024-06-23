@@ -1,6 +1,11 @@
 # EHI pangenome test
 This is a comparison between traditional MAG dereplication and pangenome generation relying on dRep clusters. The number of genomes and final annotations are compared using multiple clusters from dereplication and mapping batch DMB0162 belonging to Mediterranean lizards.
 
+## Versions
+
+- **Original:** default bifrost and ggcaller options.
+- **v2:** ggcaller changes: '--max-path-length 50000 --max-ORF-overlap 100 --min-path-score 80 --min-orf-score 80'
+
 ## Dependencies
 
 - slurm
