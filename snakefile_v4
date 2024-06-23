@@ -124,7 +124,7 @@ rule pangenome_fasta:
 	shell:
 		"""
 		module load odgi/0.8.6
-		odgi paths -i {input} -f > {output}
+		odgi flatten -i {input} -f > {output}
 		"""
 
 rule dram:
