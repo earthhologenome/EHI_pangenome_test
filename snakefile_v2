@@ -1,0 +1,103 @@
+######
+# Experimental pangenome pipeline with relaxed settings for gene calling
+# Antton alberdi
+# 2024/06/3
+# Description: the pipeline creates, annotates and analyses pangenomes.
+#
+# 1) Create pangenome input files and store them in the input folder
+# 2) Launch the snakemake using the following code:
+# module purge && module load snakemake/7.20.0 mamba/1.3.1
+# snakemake -s snakefile_v2 -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --mem {resources.mem_gb}G --time {resources.time} -c {threads} --job-name={rule}.{wildcards.pangenome} -v' --use-conda --conda-frontend mamba --conda-prefix conda --latency-wait 600 --keep-going --keep-incomplete
+#
+######
+
+#List sample wildcards
+pangenomes, = glob_wildcards("input/{pangenome}.txt")
+
+#Target files
+rule all:
+	input:
+		expand("pangenomes/{pangenome}_v2/{pangenome}.gfa", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}_v2/{pangenome}.faa", pangenome=pangenomes),
+		expand("pangenomes/{pangenome}_v2/dram/annotations.tsv", pangenome=pangenomes)
+
+rule bifrost:
+	input:
+		"input/{pangenome}.txt"
+	output:
+		gfa="pangenomes/{pangenome}_v2/{pangenome}.gfa",
+		bfg="pangenomes/{pangenome}_v2/{pangenome}.gfa.color.bfg"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:05:00'
+	shell:
+		"""
+		module load bifrost/1.3.5
+		Bifrost build -r {input} -o {output.gfa} -t {threads} -c -n
+		"""
+
+rule ggcaller:
+	input:
+		gfa="pangenomes/{pangenome}_v2/{pangenome}.gfa",
+		bfg="pangenomes/{pangenome}_v2/{pangenome}.gfa.color.bfg"
+	output:
+		seq="pangenomes/{pangenome}_v2/ggcaller/pangenome_reference.fa",
+		tsv="pangenomes/{pangenome}_v2/ggcaller/gene_presence_absence.Rtab"
+	threads:
+		8
+	params:
+		outdir="pangenomes/{pangenome}_v2/ggcaller"
+	resources:
+		mem_gb=32,
+		time='01:00:00'
+	shell:
+		"""
+		set +eu
+		source activate /home/jpl786/.conda/envs/ggc_env
+		ggcaller --graph {input.gfa} --colours {input.bfg} --out {params.outdir} --threads {threads} --balrog-db . --annotation none --no-write-graph --max-path-length 50000 --max-ORF-overlap 100 --min-path-score 80 --min-orf-score 80
+		source deactivate /home/jpl786/.conda/envs/ggc_env
+		set -eu
+		"""
+
+rule translation:
+	input:
+		seq="pangenomes/{pangenome}_v2/ggcaller/pangenome_reference.fa",
+		tsv="pangenomes/{pangenome}_v2/ggcaller/gene_presence_absence.Rtab"
+	output:
+		seq="pangenomes/{pangenome}_v2/{pangenome}.faa",
+		tsv="pangenomes/{pangenome}_v2/{pangenome}.tsv"
+	threads:
+		1
+	resources:
+		mem_gb=8,
+		time='00:05:00'
+	shell:
+		"""
+		module load bbmap/39.01
+		translate6frames.sh in={input.seq} out={output.seq} aain=f aaout=t frames=1 tag=f
+		mv {input.tsv} {output.tsv}
+		"""
+
+rule dram:
+	input:
+		"pangenomes/{pangenome}_v2/{pangenome}.faa"
+	output:
+		"pangenomes/{pangenome}_v2/dram/annotations.tsv"
+	threads:
+		8
+	params:
+		outdir="pangenomes/{pangenome}_v2/dram"
+	resources:
+		mem_gb=32,
+		time='10:00:00'
+	shell:
+		"""
+		set +eu
+		source activate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
+		rm -rf {params.outdir}
+		DRAM.py annotate_genes -i {input} -o {params.outdir} --threads {threads}
+		source deactivate /projects/mjolnir1/people/ncl550/0_software/miniconda3/envs/DRAM_more_modules
+		set -eu
+		"""
