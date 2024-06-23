@@ -41,10 +41,10 @@ snakemake -j 20 --cluster 'sbatch -o logs/{rule}.{wildcards.pangenome}-%j.out --
 ## Clusters
 
 ### cluster35
-| MAG | Selection |
-| --- | --- |
-| EHA02915_bin.85.fa.gz | * |
-| EHA00564_bin.1.fa.gz |    |
+| MAG | Selection | Completeness | Contamination | Length | Genes | Unannotated |
+| --- | --- | --- | --- | --- | --- | --- |
+| EHA02915_bin.85.fa.gz | * | 95.48 | 0.60 | 1.33 | 1515 | 532 |
+| EHA00564_bin.1.fa.gz |    | 82.69 | 1.14 | 1.48 | 1440 | 505 |
 
 ### cluster38
 - EHA00679_bin.17.fa.gz
